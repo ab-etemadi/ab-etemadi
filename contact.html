@@ -2223,6 +2223,49 @@
       href="https://fonts.googleapis.com/css2?family=Mrs+Saint+Delafield&family=Space+Grotesk:wght@300;400;500;600;700&display=swap"
       rel="stylesheet"
     />
+
+    <script
+      type="text/javascript"
+      src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"
+    ></script>
+
+    <script type="text/javascript">
+      emailjs.init("0iV_6nyz9LrUxyWE1");
+    </script>
+    <script type="text/javascript">
+      function sendEmail() {
+        var prams = {
+          from_name: document.getElementById("name").value,
+          subject: document.getElementById("title").value,
+          email: document.getElementById("email").value,
+          message: document.getElementById("message").value,
+        };
+
+        emailjs.send("service_pkq5yoa", "template_6qsurai", prams).then(
+          function (response) {
+            console.log("SUCCESS!", response.status, response.text);
+            displayMessage(
+              "Thank you for your message. It has been sent.",
+              5000
+            ); // Show the success message for 5 seconds
+          },
+          function (error) {
+            console.log("FAILED...", error);
+            displayMessage("Email Failed to Send", 5000); // Show the error message for 5 seconds
+          }
+        );
+      }
+
+      function displayMessage(message, duration) {
+        var statusElement = document.getElementById("email-status");
+        statusElement.innerText = message;
+        statusElement.style.display = "block";
+
+        setTimeout(function () {
+          statusElement.style.display = "none";
+        }, duration);
+      }
+    </script>
   </head>
 
   <body
@@ -3610,47 +3653,16 @@
                                         <ul></ul>
                                       </div>
                                       <form
-                                        action="/archee/contact-02/#wpcf7-f264-p248-o1"
                                         method="post"
                                         class="wpcf7-form init"
                                         aria-label="Contact form"
                                         novalidate="novalidate"
                                         data-status="init"
+                                        onsubmit="sendEmail(); reset(); return false;"
                                       >
-                                        <div style="display: none">
-                                          <input
-                                            type="hidden"
-                                            name="_wpcf7"
-                                            value="264"
-                                          />
-                                          <input
-                                            type="hidden"
-                                            name="_wpcf7_version"
-                                            value="5.7.7"
-                                          />
-                                          <input
-                                            type="hidden"
-                                            name="_wpcf7_locale"
-                                            value="en_US"
-                                          />
-                                          <input
-                                            type="hidden"
-                                            name="_wpcf7_unit_tag"
-                                            value="wpcf7-f264-p248-o1"
-                                          />
-                                          <input
-                                            type="hidden"
-                                            name="_wpcf7_container_post"
-                                            value="248"
-                                          />
-                                          <input
-                                            type="hidden"
-                                            name="_wpcf7_posted_data_hash"
-                                            value=""
-                                          />
-                                        </div>
                                         <div class="vlt-form-group">
                                           <input
+                                            id="name"
                                             size="40"
                                             class="wpcf7-form-control wpcf7-text wpcf7-validates-as-required vlt-form-control"
                                             aria-required="true"
@@ -3663,6 +3675,7 @@
                                         </div>
                                         <div class="vlt-form-group">
                                           <input
+                                            id="email"
                                             size="40"
                                             class="wpcf7-form-control wpcf7-text wpcf7-email wpcf7-validates-as-required wpcf7-validates-as-email vlt-form-control"
                                             aria-required="true"
@@ -3675,6 +3688,7 @@
                                         </div>
                                         <div class="vlt-form-group">
                                           <input
+                                            id="title"
                                             size="40"
                                             class="wpcf7-form-control wpcf7-text wpcf7-validates-as-required vlt-form-control"
                                             aria-required="true"
@@ -3687,6 +3701,7 @@
                                         </div>
                                         <div class="vlt-form-group">
                                           <textarea
+                                            id="message"
                                             cols="40"
                                             rows="5"
                                             class="wpcf7-form-control wpcf7-textarea vlt-form-control"
@@ -3700,12 +3715,14 @@
                                           style="margin-top: 2.5rem"
                                         >
                                           <button
+                                            type="submit"
                                             class="vlt-btn vlt-btn--primary vlt-btn--effect"
                                           >
                                             Send message
                                           </button>
                                         </div>
                                         <div
+                                          id="email-status"
                                           class="wpcf7-response-output"
                                           aria-hidden="true"
                                         ></div>
@@ -5071,6 +5088,7 @@
         </div>
       </div>
     </footer>
+
     <!-- /.vlt-footer -->
     <script type="text/javascript">
       (function () {
